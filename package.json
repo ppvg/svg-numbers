@@ -1,7 +1,7 @@
 {
   "name": "svg-numbers",
-  "version": "0.0.0",
-  "description": "Parse SVG number lists.",
+  "version": "0.0.1",
+  "description": "Parse SVG coordinates.",
   "main": "index.js",
   "directories": {
     "test": "test"
