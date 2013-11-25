@@ -1,0 +1,33 @@
+{
+  "name": "svg-numbers",
+  "version": "0.0.0",
+  "description": "Parse SVG number lists.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "tap": "~0.4.6"
+  },
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PPvG/svg-numbers.git"
+  },
+  "keywords": [
+    "svg",
+    "numbers",
+    "number",
+    "list",
+    "list-of-points",
+    "parse"
+  ],
+  "author": "Peter-Paul van Gemerden <mail@ppvg.nl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PPvG/svg-numbers/issues"
+  },
+  "homepage": "https://github.com/PPvG/svg-numbers"
+}
