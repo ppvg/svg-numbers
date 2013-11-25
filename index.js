@@ -17,13 +17,21 @@ var EXP = 3
 
 module.exports = function parse (input) {
 
+  if (typeof input !== 'string') {
+    throw new TypeError('Invalid input: ' + typeof input)
+  }
+
   var state = SEP
+  var seenComma = true
   var result = [], number = '', exponent = ''
 
   function newNumber() {
-    if (exponent==='') result.push(Number(number))
-    else               result.push(Number(number) * Math.pow(10, Number(exponent)))
-    number = exponent = ''
+    if (number !== '') {
+      if (exponent==='') result.push(Number(number))
+      else               result.push(Number(number) * Math.pow(10, Number(exponent)))
+    }
+    number = ''
+    exponent = ''
   }
 
   var current, i = 0, length = input.length
@@ -47,6 +55,13 @@ module.exports = function parse (input) {
         number = current
         continue
       }
+      // throw on double commas (e.g. "1, , 2")
+      if (RE.COMMA.test(current)) {
+        if (seenComma) {
+          throwSyntaxError(current, i, result)
+        }
+        seenComma = true
+      }
     }
 
     // parse integer part
@@ -64,6 +79,12 @@ module.exports = function parse (input) {
         state = EXP
         continue
       }
+      // throw on double signs ("-+1"), but not on sign as separator ("-1-2")
+      if (RE.SIGN.test(current)
+          && number.length === 1
+          && RE.SIGN.test(number[0])) {
+        throwSyntaxError(current, i, result)
+      }
     }
 
     // parse decimal part
@@ -75,6 +96,10 @@ module.exports = function parse (input) {
       if (RE.EXP.test(current)) {
         state = EXP
         continue
+      }
+      // throw on double decimal points (e.g. "1..2")
+      if (RE.POINT.test(current) && number[number.length-1] === '.') {
+        throwSyntaxError(current, i, result)
       }
     }
 
@@ -90,15 +115,22 @@ module.exports = function parse (input) {
           continue
         }
         if (exponent.length === 1 && RE.SIGN.test(exponent)) {
-          throwParseError(current, i, result)
+          throwSyntaxError(current, i, result)
         }
       }
     }
 
+
     // end of number
-    if (RE.WHITESPACE.test(current) || RE.COMMA.test(current)) {
+    if (RE.WHITESPACE.test(current)) {
       newNumber()
       state = SEP
+      seenComma = false
+    }
+    else if (RE.COMMA.test(current)) {
+      newNumber()
+      state = SEP
+      seenComma = true
     }
     else if (RE.SIGN.test(current)) {
       newNumber()
@@ -114,7 +146,7 @@ module.exports = function parse (input) {
       newNumber()
     }
     else {
-      throwParseError(current, i, result)
+      throwSyntaxError(current, i, result)
     }
   }
 
@@ -124,10 +156,8 @@ module.exports = function parse (input) {
   return result
 }
 
-function throwParseError(current, i, partial) { // TODO: extend Error
-  throw {
-    name: 'ParseError',
-    message: 'Unexpected character "'+current+'" at index '+i+'.',
-    partial: partial
-  }
+function throwSyntaxError(current, i, partial) {
+  var error = new SyntaxError('Unexpected character "'+current+'" at index '+i+'.')
+  error.partial = partial
+  throw error
 }
