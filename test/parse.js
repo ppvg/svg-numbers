@@ -1,5 +1,5 @@
 var parse = require('../')
-var test = require('tap').test
+var test = require('tape')
 
 test('integers', function (t) {
   t.same(parse('1'),       [ 1 ],       '1')
