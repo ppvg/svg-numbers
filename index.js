@@ -15,7 +15,11 @@ var INT = 1
 var FLOAT = 2
 var EXP = 3
 
-module.exports = function parse (input) {
+module.exports = parse
+module.exports.parse = parse
+module.exports.serialize = serialize
+
+function parse (input) {
 
   if (typeof input !== 'string') {
     throw new TypeError('Invalid input: ' + typeof input)
@@ -156,7 +160,34 @@ module.exports = function parse (input) {
   return result
 }
 
-function throwSyntaxError(current, i, partial) {
+function serialize (points) {
+  var seenFloat = false
+  var seenExponent = false
+  var result = ''
+  points.forEach(function (point) {
+    if (point < 0) {
+      if (point > -1)
+        result += '-' + point.toString().slice(2)
+      else
+        result += point.toString()
+    }
+    else {
+      if (point > 0 && point < 1) {
+        if (!seenFloat && !seenExponent && result !== '')
+          result += ','
+        result += point.toString().slice(1)
+      } else {
+        if (result !== '')
+          result += ','
+        result += point.toString()
+      }
+    }
+    seenFloat = point !== Math.round(point)
+  })
+  return result
+}
+
+function throwSyntaxError (current, i, partial) {
   var error = new SyntaxError('Unexpected character "'+current+'" at index '+i+'.')
   error.partial = partial
   throw error
