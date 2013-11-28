@@ -1,12 +1,10 @@
 # svg-numbers
 
-Parser and serializer for lists of coordinates for SVG documents, such as [the `points` attribute of a `<polyline>` element][1].
-
-  [1]: http://www.w3.org/TR/SVG/shapes.html#PointsBNF
+Parser and serializer for lists of coordinates in SVG documents, such as [the `points` attribute of a `<polyline>` element][http://www.w3.org/TR/SVG/shapes.html#PointsBNF].
 
 ## Installation
 
-With npm: `$ npm install svg-numbers`
+With [npm](https://npmjs.org/): `$ npm install svg-numbers`
 
 ## Usage
 
@@ -27,6 +25,12 @@ With npm: `$ npm install svg-numbers`
     console.log(str)
     // '10,4.2.333-8'
 
+Separators (commas and/or spaces) are left out wherever the SVG recommendation allows it. If you'd rather have separators everywhere, just use `Array.prototype.join`:
+
+    var str = numbers.join(', ')
+    console.log(str)
+    // '10, 4.2, .333, -8'
+
 ### Catching syntax errors
 
 If a syntax error is found, an error is thrown. The valid coordinates up to and until the syntax error are available as `error.partial`:
@@ -38,9 +42,7 @@ If a syntax error is found, an error is thrown. The valid coordinates up to and 
       // [ 10, 20 ]
     }
 
-(The W3C SVG recommendation has something to say about [error processing][2].)
-
-  [2]: http://www.w3.org/TR/SVG/implnote.html#ErrorProcessing
+(The W3C SVG recommendation has something to say about [error processing][http://www.w3.org/TR/SVG/implnote.html#ErrorProcessing].)
 
 ## Running the tests
 
@@ -51,6 +53,12 @@ If a syntax error is found, an error is thrown. The valid coordinates up to and 
     $ npm install
 
     $ npm test
+
+## Browser support
+
+Use [browserify](http://browserify.org/). All major browsers are supported:
+
+[![Browser support](https://ci.testling.com/PPvG/svg-numbers.png)](https://ci.testling.com/PPvG/svg-numbers)
 
 ## License
 

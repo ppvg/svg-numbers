@@ -12,11 +12,14 @@
   "testling": {
     "files": "test/*.js",
     "browsers": {
-      "ie": [ 7, 8, 9, 10 ],
-      "chrome": [ 20, 25, 30, 31 ],
-      "firefox": [ 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ],
+      "chrome": [ 27, 31 ],
+      "firefox": [ 3.6, 10, 17, 25 ],
+      "ie": [ 8, 9, 10 ],
       "safari": [ 5.1, 6 ],
-      "opera": [ 12, 15, 16, 17 ]
+      "opera": [ 10, 15, 17 ],
+      "iphone": "latest",
+      "ipad": "latest",
+      "android": "latest"
     }
   },
   "scripts": {
@@ -35,10 +38,12 @@
   "keywords": [
     "svg",
     "number",
-    "parser",
-    "parse",
     "numbers",
     "points",
-    "coordinates"
+    "coordinates",
+    "parser",
+    "parse",
+    "serializer",
+    "serialize"
   ]
 }
