@@ -1,6 +1,8 @@
 # svg-numbers
 
-Parser and serializer for lists of coordinates in SVG documents, such as [the `points` attribute of a `<polyline>` element][http://www.w3.org/TR/SVG/shapes.html#PointsBNF].
+Parser and serializer for lists of coordinates in SVG documents, such as [the `points` attribute of a `<polyline>` element](http://www.w3.org/TR/SVG/shapes.html#PointsBNF).
+
+[![NPM version](https://badge.fury.io/js/svg-numbers.png)](http://badge.fury.io/js/svg-numbers) [![Build status](https://travis-ci.org/PPvG/svg-numbers.png?branch=master)](https://travis-ci.org/PPvG/svg-numbers)
 
 ## Installation
 
@@ -42,7 +44,7 @@ If a syntax error is found, an error is thrown. The valid coordinates up to and 
       // [ 10, 20 ]
     }
 
-(The W3C SVG recommendation has something to say about [error processing][http://www.w3.org/TR/SVG/implnote.html#ErrorProcessing].)
+(The W3C SVG recommendation has something to say about [error processing](http://www.w3.org/TR/SVG/implnote.html#ErrorProcessing).)
 
 ## Running the tests
 
