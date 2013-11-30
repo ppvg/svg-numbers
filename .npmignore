@@ -1,3 +1,4 @@
 .*.swp
 .travis.yml
 svg-numbers-*.tgz
+cov/
