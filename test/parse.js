@@ -9,10 +9,11 @@ test('integers', function (t) {
 })
 
 test('floats', function (t) {
-  t.same(parse('1.5'),       [ 1.5 ],          '1.5')
-  t.same(parse('1.5, 4.2'),  [ 1.5, 4.2 ],     '1.5, 4.2')
-  t.same(parse('1.2.3.4'),   [ 1.2, .3, .4 ],  '1.2.3.4')
-  t.same(parse('1.2.3,4.5'), [ 1.2, .3, 4.5 ], '1.2.3,4.5')
+  t.same(parse('1.5'),          [ 1.5 ],            '1.5')
+  t.same(parse('1.5, 4.2'),     [ 1.5, 4.2 ],       '1.5, 4.2')
+  t.same(parse('1.2.3.4'),      [ 1.2, .3, .4 ],    '1.2.3.4')
+  t.same(parse('1.2.3,4.5'),    [ 1.2, .3, 4.5 ],   '1.2.3,4.5')
+  t.same(parse('.1 .2,.3, .4'), [ .1, .2, .3, .4 ], '.1 .2,.3, .4')
   t.end()
 })
 
@@ -38,6 +39,7 @@ test('separators', function (t) {
   t.same(parse('1,2,3'),     [ 1, 2, 3 ],     '1,2,3')
   t.same(parse('-1-2-3'),    [ -1, -2, -3 ],  '-1-2-3')
   t.same(parse('1.2.3.4'),   [ 1.2, .3, .4 ], '1.2.3.4')
+  t.same(parse('1 , 2 ,3'),  [ 1, 2, 3 ],     '1 , 2 ,3')
   t.end()
 })
 
@@ -56,6 +58,8 @@ test('type error', function (t) {
 test('syntax error', function (t) {
   t.throws(function() { parse('1.2ee4') },
            new SyntaxError('Unexpected character "e" at index 4.'))
+  t.throws(function() { parse('1.2e--4') },
+           new SyntaxError('Unexpected character "-" at index 5.'))
   t.throws(function() { parse('--1') },
            new SyntaxError('Unexpected character "-" at index 1.'))
   t.throws(function() { parse('-+1') },

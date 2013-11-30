@@ -146,9 +146,6 @@ function parse (input) {
       state = FLOAT
       number = current
     }
-    else if (i === length-1) {
-      newNumber()
-    }
     else {
       throwSyntaxError(current, i, result)
     }
